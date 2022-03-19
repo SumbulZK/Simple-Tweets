@@ -51,8 +51,20 @@ class TwitterClient(context: Context) : OAuthBaseClient(
             "intent://%s#Intent;action=android.intent.action.VIEW;scheme=%s;package=%s;S.browser_fallback_url=%s;end"
     }
 
-    // CHANGE THIS
-    // DEFINE METHODS for different API endpoints here
+
+
+    fun publishTweet(tweetContent: String, handler: JsonHttpResponseHandler) {
+        val apiUrl =
+            getApiUrl("statuses/update.json")
+
+        // Can specify query string params directly or through RequestParams.
+        val params = RequestParams()
+        params.put("status", tweetContent)
+
+
+        client.post(apiUrl, params, "", handler)
+    }
+
     fun getHomeTimeline(handler: JsonHttpResponseHandler) {
         val apiUrl =
             getApiUrl("statuses/home_timeline.json")
